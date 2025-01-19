@@ -1,0 +1,61 @@
+mim download mmdet3d --config pointpillars_hv_secfpn_8xb6-160e_kitti-3d-car --dest .
+mim download mmdet3d --config pointnet2_msg_2xb16-cosine-80e_s3dis-seg --dest .
+python demo/pcd_seg_demo.py demo/data/kitti/000008.bin pointnet2_msg_2xb16-cosine-80e_s3dis-seg.py pointnet2_msg_16x2_cosine_80e_s3dis_seg-3d-13class_20210514_144307-b2059817.pth --show
+python demo/multi_modality_demo.py demo/data/nuscenes/n015-2018-07-24-11-22-45+0800__LIDAR_TOP__1532402927647951.pcd.bin demo/data/nuscenes/ demo/data/nuscenes/n015-2018-07-24-11-22-45+0800.pkl projects/BEVFusion/configs/bevfusion_lidar-cam_voxel0075_second_secfpn_8xb4-cyclic-20e_nus-3d.py ${CHECKPOINT_FILE} --cam-type all --score-thr 0.2 --show
+checkpoints/BEVFusion/bevfusion_converted.pth
+
+python demo/multi_modality_demo.py demo/data/nuscenes/n015-2018-07-24-11-22-45+0800__LIDAR_TOP__1532402927647951.pcd.bin demo/data/nuscenes/ demo/data/nuscenes/n015-2018-07-24-11-22-45+0800.pkl projects/BEVFusion/configs/bevfusion_lidar-cam_voxel0075_second_secfpn_8xb4-cyclic-20e_nus-3d.py checkpoints/BEVFusion/bevfusion_converted.pth --cam-type all --score-thr 0.2 --show
+checkpoints/BEVFusion/bevfusion_converted.pth
+
+
+python demo/pcd_demo.py demo/data/kitti/000008.bin configs/pointpillars/pointpillars_hv_secfpn_8xb6-160e_kitti-3d-3class.py checkpoints/hv_pointpillars_secfpn_6x8_160e_kitti-3d-3class_20220301_150306-37dc2420.pth --show
+
+python demo/pcd_demo.py demo/data/kitti/000008.bin configs/pointpillars/pointpillars_hv_secfpn_8xb6-160e_kitti-3d-3class.py checkpoints/hv_pointpillars_secfpn_6x8_160e_kitti-3d-car_20220331_134606-d42d15ed.pth --show
+python demo/pcd_demo.py ./data/kitti/000008.bin configs/pointpillars/pointpillars_hv_secfpn_8xb6-160e_kitti-3d-3class.py checkpoints/hv_pointpillars_secfpn_6x8_160e_kitti-3d-car_20220331_134606-d42d15ed.pth --show
+
+# 单块显卡测试
+python tools/test.py ${CONFIG_FILE} ${CHECKPOINT_FILE} [--out ${RESULT_FILE}] [--eval ${EVAL_METRICS}] [--show] [--show-dir ${SHOW_DIR}]
+python tools/test.py configs/votenet/votenet_8xb8_scannet-3d.py \
+    checkpoints/votenet_8x8_scannet-3d-18class_20200620_230238-2cea9c3a.pth \
+    --show --show-dir ./data/scannet/show_results
+
+python  tools/test.py ./work_dirs/myconfig/myconfig.py ./work_dirs/myconfig/epoch_1000.pth --show --show-dir ./show --work-dir ./show --task lidar_det
+python  tools/test.py ./work_dirs/mypillar/mypillar.py ./work_dirs/mypillar/epoch_8000.pth --show --show-dir ./show --work-dir ./show --task lidar_det --score-thr 0
+
+
+# 单块显卡测试生成result txt文件
+python tools/test.py ${CONFIG_FILE} ${CHECKPOINT_FILE} [--out ${RESULT_FILE}] [--eval ${EVAL_METRICS}] [--show] [--show-dir ${SHOW_DIR}]
+
+python tools/test.py ./work_dirs/faf_cp_cycRes23_aug/faf_cp_cycRes23_dbaug.py ./work_dirs/faf_cp_cycRes23_aug/epoch_180.pth --cfg-options 'test_evaluator.pklfile_prefix=./kitti_result/faf_cp_cycRes23_aug_kitti_results' 'submission_prefix=./kitti_result/faf_cp_cycRes23_aug_kitti_results'
+python tools/test.py ./work_dirs/faf_cp_cycRes23_aug/faf_cp_cycRes23_dbaug_test.py ./work_dirs/faf_cp_cycRes23_aug/epoch_180.pth --cfg-options 'test_evaluator.pklfile_prefix=./kitti_result/faf_cp_cycRes23_aug_kitti_results' 'submission_prefix=./kitti_result/faf_cp_cycRes23_aug_kitti_results'
+
+kitti_result
+
+# 几个test示例
+python tools/test.py ./work_dirs/faf_cp_cycRes23_aug/faf_cp_cycRes23_dbaug_test.py ./work_dirs/faf_cp_cycRes23_aug/epoch_180.pth --cfg-options 'test_evaluator.pklfile_prefix=./kitti_result/faf_cp_cycRes23_aug_kitti_results' 'submission_prefix=./kitti_result/faf_cp_cycRes23_aug_kitti_results'
+
+
+python tools/test.py ./work_dirs/autodl_fpp_fpn_SGD/fpp-SGD-yoloxpanfpn-kitti-3class-64-bevaug/fpp-SGD-yoloxpanfpn-kitti-3class-64-bevaug.py ./work_dirs/autodl_fpp_fpn_SGD/fpp-SGD-yoloxpanfpn-kitti-3class-64-bevaug/epoch_20.pth --cfg-options 'test_evaluator.pklfile_prefix=./kitti_result/fpp-SGD-yoloxpanfpn-kitti-3class-64-bevaug_results' 'submission_prefix=./kitti_result/sub_fpp-SGD-yoloxpanfpn-kitti-3class-64-bevaug_results' --show-dir ./kitti_result/fpp-SGD-yoloxpanfpn-kitti-3class-64-bevaug_show/ --task multi-modality_det
+
+python tools/test.py ./work_dirs/fpp-SGD-csppanfpn-kitti-3class-64-bevaug/fpp-SGD-csppanfpn-kitti-3class-64-bevaug.py ./work_dirs/fpp-SGD-csppanfpn-kitti-3class-64-bevaug/epoch_31.pth --cfg-options 'test_evaluator.pklfile_prefix=./kitti_result/fpp-SGD-csppanfpn-kitti-3class-64-bevaug' 'submission_prefix=./kitti_result/sub_fpp-SGD-csppanfpn-kitti-3class-64-bevaug'
+
+
+
+work_dirs\fpp-SGD-csppanfpn-kitti-3class-64-bevaug\fpp-SGD-csppanfpn-kitti-3class-64-bevaug.py
+work_dirs\fpp-SGD-csppanfpn-kitti-3class-64-bevaug\epoch_31.pth
+
+# 检查运行环境
+python mmdet3d/utils/collect_env.py
+
+
+
+
+
+
+
+
+
+
+
+
+

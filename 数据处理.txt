@@ -1,0 +1,67 @@
+python tools/create_data.py kitti --root-path ./data/kitti --out-dir ./data/kitti --extra-tag kitti
+python tools/create_data.py kitti --root-path ./data/kitti/kitti_tiny_3D --out-dir ./data/kitti/kitti_tiny_3D --extra-tag kitti
+python tools/create_data.py kitti --root-path ./data/kitti_tiny_3D --out-dir ./data/kitti_tiny_3D --extra-tag kitti
+
+python tools/dataset_converters/update_infos_to_v2.py --dataset kitti --pkl-path ./data/kitti_tiny_3D/kitti_infos_trainval.pkl --out-dir ./data/kitti_tiny_3D
+mmdetection3d\data\kitti\kitti_tiny_3D
+
+
+# 'det' (choose from 'mono_det', 'multi-view_det', 'lidar_det', 'lidar_seg', 'multi-modality_det')
+python tools/misc/browse_dataset.py configs/_base_/datasets/kitti-3d-3class.py --task det --output-dir tmp 
+python tools/misc/browse_dataset.py configs/_base_/datasets/kitti_tiny-3d-3class.py --task lidar_det --output-dir tmp 
+
+
+python tools/create_data.py nuscenes --root-path ./data/nuscenes --out-dir ./data/nuscenes --extra-tag nuscenes
+python tools/create_data.py nuscenes --root-path ./data/nuscenes/v1.0-mini --out-dir ./data/nuscenes/v1.0-mini --extra-tag nuscenes
+E:\OpenMMLab\mmdetection3d\data\nuscense\v1.0-mini
+
+
+python tools/create_data.py waymo --root-path ./data/waymo/ --out-dir ./data/waymo/ --workers 128 --extra-tag waymo
+
+
+python tools/create_data.py nuscenes --root-path ./data/nuscenes --out-dir ./data/nuscenes --extra-tag nuscenes --version v1.0-mini
+
+
+python tools/create_data.py kitti --root-path ./data/go2 --out-dir ./data/go2 --extra-tag kitti
+
+
+
+
+
+
+
+现成的标注文件：我们已经提供了离线处理好的 KITTI 标注文件。
+您直接下载他们并放到 data/kitti/ 目录下。
+然而，如果你想在点云检测方法中使用 ObjectSample 这一数据增强，
+你可以再额外使用以下命令来生成物体标注框数据库：
+
+python tools/create_data.py kitti --root-path ./data/kitti --out-dir ./data/kitti --extra-tag kitti --only-gt-database
+# 生成 kitti_mm_dbinfo 使用with mask,当version==mask时,with mask参数为true
+python tools/create_data.py kitti --root-path ./data/kitti --out-dir ./data/kitti --extra-tag kitti --only-gt-database --version mask
+
+# 测试一下小数据集
+python tools/create_data.py kitti --root-path ./data/kitti_tiny_3D --out-dir ./data/kitti_tiny_3D --extra-tag kitti --only-gt-database --version mask
+
+# 生成数据
+python tools/create_data.py kitti --root-path ./data/kitti --out-dir ./data/kitti --extra-tag kitti --with-plane
+
+# 测试新版
+python tools/create_data2.py kitti --root-path ./data/kitti_tiny_3D --out-dir ./data/kitti_tiny_3D --extra-tag kitti --only-gt-database --with-2D
+
+# 正式版
+python tools/create_data2.py kitti --root-path ./data/kitti --out-dir ./data/kitti --extra-tag kitti --only-gt-database --with-2D
+
+
+# nuscenes版
+# 生成gt db
+python tools/create_data2.py nuscenes --root-path ./data/nuscenes --out-dir ./data/nuscenes --extra-tag nuscenes --only-gt-database --with-2D
+# 生成info文件(不含gt db)
+python tools/create_data2.py nuscenes --root-path ./data/nuscenes --out-dir ./data/nuscenes --extra-tag nuscenes --with-2D
+
+# 处理nuscenes mini
+python tools/create_data2.py nuscenes --root-path ./data/nuscenes_mini --out-dir ./data/nuscenes_mini --extra-tag nuscenes --version v1.0-mini --with-2D
+# 生成gt db
+python tools/create_data2.py nuscenes --root-path ./data/nuscenes_mini --out-dir ./data/nuscenes_mini --extra-tag nuscenes --version v1.0-mini --only-gt-database --with-2D
+
+
+

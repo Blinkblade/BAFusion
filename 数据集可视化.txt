@@ -1,0 +1,59 @@
+python tools/misc/browse_dataset.py configs/_base_/datasets/kitti-3d-3class.py --task det --output-dir tmp 
+python tools/misc/browse_dataset.py configs/_base_/datasets/kitti_tiny-3d-3class.py --task lidar_det --output-dir tmp 
+python tools/misc/visualize_results.py ${CONFIG_FILE} --result ${RESULTS_PATH} --show-dir ${SHOW_DIR}
+# epoch必须大于log的inter
+python .\tools\analysis_tools\analyze_logs.py plot_curve  .\work_dirs\centerpoint_pure\kitti\20230831_111757\vis_data\20230831_111757.json
+# 在vis部分必须设置backbend为tensorboard
+tensorboard --logdir=work_dirs/centerpoint_pure/tensorboard/20230909_160019/vis_data
+
+tensorboard --logdir=work_dirs/deepfusion_cp/202309102/20230910_152550/vis_data
+
+tensorboard --logdir=.\work_dirs\autodl_flatten_attention_car\flatten_attention_fusion_car\20230925_085251\vis_data\  
+
+
+tensorboard --logdir=.\work_dirs\autodl_flatten_attention_car\flatten_attention_fusion_car\20230918_171134_03\vis_data\ --port=6007
+
+tensorboard --logdir=.\work_dirs\autodl_flatten_attention_car\flatten_attention_fusion_car\20230925_085251\vis_data\ 
+
+
+# 20231104
+tensorboard --logdir=.\work_dirs\faf_car_cyc200e\20231101_171557\vis_data\
+
+#20231106
+tensorboard --logdir=.\work_dirs\faf_cp_adamw0018_300e\20231104_123432\vis_data\
+
+
+#20231116
+tensorboard --logdir=.\work_dirs\faf_adamwRes23\20231113_101751\vis_data\
+
+#20231119
+tensorboard --logdir=.\work_dirs\faf_cp_cycRes23_aug\20231116_092229\vis_data\
+
+#20231121
+tensorboard --logdir=.\work_dirs\fpp-160e_kitti-3class-c64-dbaug\20231119_115929\vis_data\
+
+#20231126
+tensorboard --logdir=.\work_dirs\autodl_fpp_fpn_cyc200e\20231123_171152\vis_data\
+
+#20231130
+tensorboard --logdir=.\work_dirs\fpp-160e-csppanfpn-kitti-3class-64-bevaug\20231128_095311\vis_data\
+
+#20231130
+tensorboard --logdir=.\work_dirs\fpp-SGD-csppanfpn-kitti-3class-64-bevaug\20231130_093033\vis_data\
+
+#20231201
+tensorboard --logdir=.\work_dirs\bifpp-80e-csppanfpn-kitti-3class-64-bevaug\20231130_192115\vis_data\
+
+#20231219
+tensorboard --logdir=.\work_dirs\bafpp-100e-cspfpn-catnorm-aug\20231216_120938\vis_data\
+
+
+#20231226 pointpillars
+tensorboard --logdir=.\work_dirs\pointpillars_hv_secfpn_8xb6-160e_kitti-3d-3class\20231225_121750\vis_data\
+
+
+work_dirs\pointpillars_hv_secfpn_8xb6-160e_kitti-3d-3class\20231225_121750\vis_data
+
+
+
+

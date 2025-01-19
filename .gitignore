@@ -1,0 +1,30 @@
+# 忽略日志文件
+*.log
+# 中间文件夹
+build/
+data/
+nus_code/
+outputs/
+second_kitti_results/
+work_dirs/
+work_dirs_old/
+results/
+checkpoints/
+*.pth
+# 忽略 node_modules 文件夹
+# node_modules/
+
+# git commit -m "init commit"
+# https://github.com/Blinkblade/BAFusion
+# git remote add origin https://github.com/Blinkblade/BAFusion.git
+
+
+# git checkout main
+# git reset --soft $(git rev-list --max-parents=0 HEAD)
+# git commit -m "init commit"
+# git push origin main --force
+
+
+
+
+
